@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="240" height="13" tilewidth="16" tileheight="16" nextobjectid="67">
+ <tileset firstgid="1" name="mario" tilewidth="16" tileheight="16" spacing="2" margin="1" tilecount="924">
+  <image source="../../../../../Documents/SuperMario/android/assets/tileset_gutter.png" width="594" height="504"/>
+ </tileset>
+ <layer name="background" width="240" height="13">
+  <data encoding="base64" compression="zlib">
+   eJztw7ENAAAMAiDT/z928YpukNBLqqqqqqqqqqqqqqqq+ngvgAwl
+  </data>
+ </layer>
+ <layer name="graphics" width="240" height="13">
+  <data encoding="base64" compression="zlib">
+   eJzt1bEJwDAMBEBpnWQUZ5R4/zYewAYTDHZxB9+oUvN8BAAAAAAAAADMKxnx5O4vgD/e1t2qv3CM3qaOdvZqt1t/4Ri9TR3trP7CeilLAjt8MLAFXQ==
+  </data>
+ </layer>
+ <objectgroup name="ground">
+  <object id="48" x="0" y="192" width="1312" height="16"/>
+  <object id="50" x="412" y="254"/>
+  <object id="51" x="244" y="-404"/>
+ </objectgroup>
+ <objectgroup name="pipes">
+  <object id="58" x="240" y="160" width="32" height="32"/>
+  <object id="62" x="320" y="160" width="32" height="32"/>
+  <object id="63" x="416" y="128" width="32" height="64"/>
+  <object id="64" x="305.333" y="-162.667"/>
+  <object id="65" x="1104" y="-1616"/>
+  <object id="66" x="1232" y="-1656"/>
+ </objectgroup>
+ <objectgroup name="coins"/>
+ <objectgroup name="bricks"/>
+</map>

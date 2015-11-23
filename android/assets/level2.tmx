@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="240" height="13" tilewidth="16" tileheight="16" nextobjectid="4">
+ <tileset firstgid="1" name="resimg" tilewidth="16" tileheight="16" spacing="2" margin="1" tilecount="924">
+  <image source="tileset_gutter.png" width="594" height="504"/>
+ </tileset>
+ <layer name="background" width="240" height="13">
+  <data encoding="base64" compression="zlib">
+   eJztwzEJAAAMA7Ay/4bqrir2JZBeUlVVVVVVVVVVVVVV1ccDxULniQ==
+  </data>
+ </layer>
+ <objectgroup name="pipes"/>
+ <objectgroup name="ground">
+  <object id="1" x="0" y="192" width="16"/>
+  <object id="2" x="0" y="176" width="400" height="32"/>
+  <object id="3" x="400" y="192" width="144" height="16"/>
+ </objectgroup>
+ <layer name="graphic" width="240" height="13">
+  <data encoding="base64" compression="zlib">
+   eJzt00ERAAAIwzC04F8kKrYPyV0ldAYAAAAAAAAAAADgly0EZDT+9TtkHIZ3CD0=
+  </data>
+ </layer>
+</map>
