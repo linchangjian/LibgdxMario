@@ -1,5 +1,7 @@
 package com.lcj.supermario.sprites;
 
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -38,7 +40,7 @@ public class Mario extends Sprite {
 
     private boolean runningRight;
     private float stateTimer;
-
+    private Music music;
     public Mario(World world, PlayScreen screen){
         super(screen.getAtlas().findRegion("little_mario"));
         this.world = world;
@@ -81,6 +83,9 @@ public class Mario extends Sprite {
         fdef.shape = head;
         fdef.isSensor = true;
         b2body.createFixture(fdef).setUserData("head");
+        music = SuperMario.manager.get("audio/music/mario_music.ogg",Music.class);
+        music.setLooping(true);
+        music.play();
     }
 
     public void update(float dt){
