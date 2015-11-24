@@ -28,6 +28,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.lcj.supermario.SuperMario;
 import com.lcj.supermario.scenes.Hud;
 import com.lcj.supermario.sprites.Mario;
+import com.lcj.supermario.tools.B2WorldCreator;
 
 import java.awt.Polygon;
 
@@ -65,22 +66,8 @@ public class PlayScreen implements Screen {
         b2dr = new Box2DDebugRenderer();
 
         palyer = new Mario(world);
-        BodyDef bded = new BodyDef();
-        PolygonShape shape = new PolygonShape();
-        FixtureDef fdef = new FixtureDef();
 
-        Body body;
-        for(MapObject object : tiledMap.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)){
-            Rectangle rect = ((RectangleMapObject)object).getRectangle();
-
-            bded.type = BodyDef.BodyType.StaticBody;
-            bded.position.set((rect.getX()+rect.getWidth() / 2) / SuperMario.PPM ,(rect.getY()+ rect.getHeight()/2)/SuperMario.PPM);
-
-            body = world.createBody(bded);
-            shape.setAsBox(rect.getWidth() / 2 / SuperMario.PPM,rect.getHeight() / 2/ SuperMario.PPM);
-            fdef.shape = shape;
-            body.createFixture(fdef);
-        }
+        new B2WorldCreator(world,tiledMap);
     }
 
     @Override
@@ -143,6 +130,10 @@ public class PlayScreen implements Screen {
 
     @Override
     public void dispose() {
-
+        tiledMap.dispose();
+        b2dr.dispose();
+        world.dispose();
+        renderer.dispose();
+        hud.dispose();
     }
 }
