@@ -2,6 +2,7 @@ package com.lcj.supermario.screen;
 
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -11,6 +12,7 @@ import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -25,6 +27,7 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.lcj.supermario.SuperMario;
 import com.lcj.supermario.scenes.Hud;
+import com.lcj.supermario.sprites.Mario;
 
 import java.awt.Polygon;
 
@@ -34,46 +37,47 @@ import java.awt.Polygon;
 public class PlayScreen implements Screen {
 
     private SuperMario game;
-    private Texture texture;
     private OrthographicCamera gameCam;
     private Viewport gamePort;
     private Hud hud;
 
-    private OrthoCachedTiledMapRenderer renderer;
+    private OrthogonalTiledMapRenderer renderer;
     private TiledMap tiledMap;
     private TmxMapLoader tmxMapLoader;
 
     private World world;
     private Box2DDebugRenderer b2dr;
 
+    private  Mario palyer;
     public PlayScreen(SuperMario game) {
         this.game = game;
-        texture = new Texture("tileset_gutter.png");
         gameCam = new OrthographicCamera();
-        gamePort = new FitViewport(SuperMario.V_WIDTH,SuperMario.V_HEIGHT,gameCam);
+        gamePort = new FitViewport(SuperMario.V_WIDTH/ SuperMario.PPM,SuperMario.V_HEIGHT/SuperMario.PPM,gameCam);
         hud = new Hud(game.batch);
-
         tmxMapLoader = new TmxMapLoader();
-        tiledMap = tmxMapLoader.load("level2.tmx");
-        renderer = new OrthoCachedTiledMapRenderer(tiledMap);
+        tiledMap = tmxMapLoader.load("level1.tmx");
+        renderer = new OrthogonalTiledMapRenderer(tiledMap, 1/SuperMario.PPM);
+        gameCam.position.set(gamePort.getScreenWidth()/2,gamePort.getScreenHeight()/2,0);
 
-        gameCam.position.set(gamePort.getScreenWidth() / 2 , gamePort.getScreenHeight() / 2,0);
 
-        world = new World(new Vector2(0,0), true);
+        world = new World(new Vector2(0,-10), true);
+
         b2dr = new Box2DDebugRenderer();
 
+        palyer = new Mario(world);
         BodyDef bded = new BodyDef();
         PolygonShape shape = new PolygonShape();
         FixtureDef fdef = new FixtureDef();
+
         Body body;
         for(MapObject object : tiledMap.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject)object).getRectangle();
 
             bded.type = BodyDef.BodyType.StaticBody;
-            bded.position.set(rect.getX()+rect.getWidth() / 2 ,rect.getY()+ rect.getHeight());
+            bded.position.set((rect.getX()+rect.getWidth() / 2) / SuperMario.PPM ,(rect.getY()+ rect.getHeight()/2)/SuperMario.PPM);
 
             body = world.createBody(bded);
-            shape.setAsBox(rect.getWidth() / 2 ,rect.getHeight() / 2);
+            shape.setAsBox(rect.getWidth() / 2 / SuperMario.PPM,rect.getHeight() / 2/ SuperMario.PPM);
             fdef.shape = shape;
             body.createFixture(fdef);
         }
@@ -83,13 +87,25 @@ public class PlayScreen implements Screen {
     public void show() {
     }
     public void handleInput(float dt){
-        if(Gdx.input.isTouched()){
-            gameCam.position.x += 100*dt;
+       if(Gdx.input.isKeyJustPressed(Input.Keys.UP)){
+           palyer.b2body.applyLinearImpulse(new Vector2(0,4f),palyer.b2body.getWorldCenter(),true);
+       }
+        if(Gdx.input.isKeyPressed(Input.Keys.RIGHT) && (palyer.b2body.getLinearVelocity().x <= 2)){
+            palyer.b2body.applyLinearImpulse(new Vector2(0.1f,0f),palyer.b2body.getWorldCenter(),true);
+
+        }
+        if(Gdx.input.isKeyPressed(Input.Keys.LEFT) && (palyer.b2body.getLinearVelocity().x >= -2)){
+            palyer.b2body.applyLinearImpulse(new Vector2(-0.1f,0f),palyer.b2body.getWorldCenter(),true);
+
         }
     }
 
     public void update(float dt){
         handleInput(dt);
+
+        world.step(1 / 60f, 6, 2);
+
+        gameCam.position.x = palyer.b2body.getPosition().x;
         gameCam.update();
         renderer.setView(gameCam);
     }
