@@ -7,6 +7,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -50,7 +51,9 @@ public class PlayScreen implements Screen {
     private Box2DDebugRenderer b2dr;
 
     private  Mario palyer;
+    private TextureAtlas atlas;
     public PlayScreen(SuperMario game) {
+        atlas = new TextureAtlas("Mario_and_Enemies.pack");
         this.game = game;
         gameCam = new OrthographicCamera();
         gamePort = new FitViewport(SuperMario.V_WIDTH/ SuperMario.PPM,SuperMario.V_HEIGHT/SuperMario.PPM,gameCam);
@@ -65,9 +68,12 @@ public class PlayScreen implements Screen {
 
         b2dr = new Box2DDebugRenderer();
 
-        palyer = new Mario(world);
+        palyer = new Mario(world,this);
 
         new B2WorldCreator(world,tiledMap);
+    }
+    public TextureAtlas getAtlas(){
+        return this.atlas;
     }
 
     @Override
@@ -92,6 +98,7 @@ public class PlayScreen implements Screen {
 
         world.step(1 / 60f, 6, 2);
 
+        palyer.update(dt);
         gameCam.position.x = palyer.b2body.getPosition().x;
         gameCam.update();
         renderer.setView(gameCam);
@@ -103,9 +110,15 @@ public class PlayScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         renderer.render();
 
-        b2dr.render(world,gameCam.combined);
+        b2dr.render(world, gameCam.combined);
+        game.batch.setProjectionMatrix(gameCam.combined);
+        game.batch.begin();
+        palyer.draw(game.batch);
+        game.batch.end();
+
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
+
     }
 
     @Override
