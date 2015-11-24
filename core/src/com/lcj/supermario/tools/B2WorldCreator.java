@@ -10,6 +10,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.lcj.supermario.sprites.Brick;
+import com.lcj.supermario.sprites.Coin;
 
 /**
  * Created by aniu on 15/11/24.
@@ -24,7 +25,22 @@ public class B2WorldCreator {
         for(MapObject object : map.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject)object).getRectangle();
 
-           new Brick(world,map,rect);
+            new Brick(world,map,rect);
+        }
+        for(MapObject object : map.getLayers().get(5).getObjects().getByType(RectangleMapObject.class)){
+            Rectangle rect = ((RectangleMapObject)object).getRectangle();
+
+            new Brick(world,map,rect);
+        }
+        for(MapObject object : map.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)){
+            Rectangle rect = ((RectangleMapObject)object).getRectangle();
+
+            new Coin(world,map,rect);
+        }
+        for(MapObject object : map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)){
+            Rectangle rect = ((RectangleMapObject)object).getRectangle();
+
+            new Coin(world,map,rect);
         }
     }
 }
