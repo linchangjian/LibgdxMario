@@ -30,6 +30,7 @@ import com.lcj.supermario.SuperMario;
 import com.lcj.supermario.scenes.Hud;
 import com.lcj.supermario.sprites.Mario;
 import com.lcj.supermario.tools.B2WorldCreator;
+import com.lcj.supermario.tools.WorldContactListener;
 
 import java.awt.Polygon;
 
@@ -60,15 +61,16 @@ public class PlayScreen implements Screen {
         hud = new Hud(game.batch);
         tmxMapLoader = new TmxMapLoader();
         tiledMap = tmxMapLoader.load("level1.tmx");
-        renderer = new OrthogonalTiledMapRenderer(tiledMap, 1/SuperMario.PPM);
+        renderer = new OrthogonalTiledMapRenderer(tiledMap, 1 / SuperMario.PPM);
         gameCam.position.set(gamePort.getScreenWidth()/2,gamePort.getScreenHeight()/2,0);
-
-
+        gameCam.position.y = 1;
         world = new World(new Vector2(0,-10), true);
 
         b2dr = new Box2DDebugRenderer();
 
         palyer = new Mario(world,this);
+
+        world.setContactListener(new WorldContactListener());
 
         new B2WorldCreator(world,tiledMap);
     }
@@ -93,13 +95,19 @@ public class PlayScreen implements Screen {
         }
     }
 
-    public void update(float dt){
+    public void update(float dt) {
         handleInput(dt);
 
         world.step(1 / 60f, 6, 2);
 
         palyer.update(dt);
         gameCam.position.x = palyer.b2body.getPosition().x;
+        if(palyer.b2body.getPosition().x < gamePort.getWorldWidth() / 2)
+            gameCam.position.x = 2;
+
+
+
+
         gameCam.update();
         renderer.setView(gameCam);
     }

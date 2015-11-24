@@ -3,9 +3,11 @@ package com.lcj.supermario.sprites;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
@@ -57,8 +59,7 @@ public class Mario extends Sprite {
 
 
         marioStand = new TextureRegion(getTexture(),0,10,16,16);
-        setBounds(0, 0, 16 / SuperMario.PPM, 16/SuperMario.PPM);
-        setRegion(marioStand);
+        setBounds(0, 0, 16 / SuperMario.PPM, 16 / SuperMario.PPM);
 
         BodyDef bdef = new BodyDef();
         bdef.position.set(32/ SuperMario.PPM, 32/ SuperMario.PPM);
@@ -70,11 +71,18 @@ public class Mario extends Sprite {
         shape.setRadius(7/ SuperMario.PPM);
         fdef.shape = shape;
         b2body.createFixture(fdef);
+
+        EdgeShape head = new EdgeShape();
+        head.set(new Vector2(-2/ SuperMario.PPM, 8/ SuperMario.PPM),new Vector2(2/ SuperMario.PPM, 8/ SuperMario.PPM));
+        fdef.shape = head;
+        fdef.isSensor = true;
+        b2body.createFixture(fdef).setUserData("head");
     }
 
     public void update(float dt){
         setPosition(b2body.getPosition().x - getWidth()/2, b2body.getPosition().y - getHeight()/2);
         setRegion(getFrame(dt));
+        //setRegion(new TextureRegion(getTexture(), 0, 0, 1, 1));
     }
 
     private TextureRegion getFrame(float dt) {
