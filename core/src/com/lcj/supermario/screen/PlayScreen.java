@@ -58,7 +58,7 @@ public class PlayScreen implements Screen {
         b2dr = new Box2DDebugRenderer();
 
         palyer = new Mario(this);
-        goomba= new Goomba(this,.32f,.32f);
+        goomba= new Goomba(this,.64f,.32f);
         world.setContactListener(new WorldContactListener());
 
         new B2WorldCreator(this);

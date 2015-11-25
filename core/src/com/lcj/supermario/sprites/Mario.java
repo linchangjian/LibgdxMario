@@ -77,7 +77,8 @@ public class Mario extends Sprite {
                         SuperMario.COIN_BIT |
                         SuperMario.BRICK_BIT |
                         SuperMario.OBJECT_BIT |
-                        SuperMario.ENEMY_BIT ;
+                        SuperMario.ENEMY_BIT |
+                        SuperMario.ENEMY_HEAD_BIT;
 
         fdef.shape = shape;
         b2body.createFixture(fdef);
