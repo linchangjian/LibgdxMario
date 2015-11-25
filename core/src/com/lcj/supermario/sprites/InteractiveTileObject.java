@@ -12,6 +12,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.lcj.supermario.SuperMario;
+import com.lcj.supermario.screen.PlayScreen;
 
 /**
  * Created by aniu on 15/11/24.
@@ -24,9 +25,9 @@ public abstract class InteractiveTileObject {
     protected Body body;
     protected Fixture fixture;
 
-    public InteractiveTileObject(World world, TiledMap map, Rectangle bounds) {
-        this.world = world;
-        this.map = map;
+    public InteractiveTileObject(PlayScreen screen, Rectangle bounds) {
+        this.world = screen.getWorld();
+        this.map = screen.getTiledMap();
         this.bounds = bounds;
 
         BodyDef bdef = new BodyDef();
@@ -39,6 +40,7 @@ public abstract class InteractiveTileObject {
         body = world.createBody(bdef);
         shape.setAsBox(bounds.getWidth() / 2 / SuperMario.PPM,bounds.getHeight() / 2/ SuperMario.PPM);
         fdef.shape = shape;
+        fdef.filter.categoryBits = SuperMario.OBJECT_BIT;
         fixture = body.createFixture(fdef);
 
 

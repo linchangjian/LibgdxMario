@@ -6,33 +6,21 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.lcj.supermario.SuperMario;
 import com.lcj.supermario.scenes.Hud;
+import com.lcj.supermario.sprites.Goomba;
 import com.lcj.supermario.sprites.Mario;
 import com.lcj.supermario.tools.B2WorldCreator;
 import com.lcj.supermario.tools.WorldContactListener;
-
-import java.awt.Polygon;
 
 /**
  * Created by aniu on 15/11/23.
@@ -52,6 +40,7 @@ public class PlayScreen implements Screen {
     private Box2DDebugRenderer b2dr;
 
     private  Mario palyer;
+    private Goomba goomba;
     private TextureAtlas atlas;
     public PlayScreen(SuperMario game) {
         atlas = new TextureAtlas("Mario_and_Enemies.pack");
@@ -68,14 +57,21 @@ public class PlayScreen implements Screen {
 
         b2dr = new Box2DDebugRenderer();
 
-        palyer = new Mario(world,this);
-
+        palyer = new Mario(this);
+        goomba= new Goomba(this,.32f,.32f);
         world.setContactListener(new WorldContactListener());
 
-        new B2WorldCreator(world,tiledMap);
+        new B2WorldCreator(this);
     }
     public TextureAtlas getAtlas(){
         return this.atlas;
+    }
+    public World getWorld(){
+        return world;
+    }
+
+    public TiledMap getTiledMap(){
+        return tiledMap;
     }
 
     @Override
@@ -106,7 +102,7 @@ public class PlayScreen implements Screen {
             gameCam.position.x = 2;
 
 
-
+        goomba.update(dt);
         hud.update(dt);
         gameCam.update();
         renderer.setView(gameCam);
@@ -122,6 +118,7 @@ public class PlayScreen implements Screen {
         game.batch.setProjectionMatrix(gameCam.combined);
         game.batch.begin();
         palyer.draw(game.batch);
+        goomba.draw(game.batch);
         game.batch.end();
 
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
