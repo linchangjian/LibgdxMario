@@ -9,22 +9,27 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
+import com.lcj.supermario.SuperMario;
 import com.lcj.supermario.screen.PlayScreen;
 import com.lcj.supermario.sprites.Brick;
 import com.lcj.supermario.sprites.Coin;
+import com.lcj.supermario.sprites.Goomba;
 import com.lcj.supermario.sprites.Pipe;
 
 /**
  * Created by aniu on 15/11/24.
  */
 public class B2WorldCreator {
+    private Array<Goomba> goombas;
+
+    public Array<Goomba> getGoombas() {
+        return goombas;
+    }
+
     public B2WorldCreator(PlayScreen screen){
-        BodyDef bded = new BodyDef();
-        PolygonShape shape = new PolygonShape();
-        FixtureDef fdef = new FixtureDef();
         TiledMap map = screen.getTiledMap();
-        World world = screen.getWorld();
-        Body body;
+
         for(MapObject object : map.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject)object).getRectangle();
 
@@ -45,5 +50,12 @@ public class B2WorldCreator {
 
             new Pipe(screen,rect);
         }
+
+        goombas = new Array<Goomba>();
+        for(MapObject object : map.getLayers().get(6).getObjects().getByType(RectangleMapObject.class)){
+            Rectangle rect = ((RectangleMapObject)object).getRectangle();
+            goombas.add(new Goomba(screen,rect.getX()/ SuperMario.PPM,rect.getY() / SuperMario.PPM));
+        }
+
     }
 }

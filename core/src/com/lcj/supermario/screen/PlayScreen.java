@@ -17,6 +17,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.lcj.supermario.SuperMario;
 import com.lcj.supermario.scenes.Hud;
+import com.lcj.supermario.sprites.Enemy;
 import com.lcj.supermario.sprites.Goomba;
 import com.lcj.supermario.sprites.Mario;
 import com.lcj.supermario.tools.B2WorldCreator;
@@ -42,6 +43,8 @@ public class PlayScreen implements Screen {
     private  Mario palyer;
     private Goomba goomba;
     private TextureAtlas atlas;
+
+    private B2WorldCreator creator;
     public PlayScreen(SuperMario game) {
         atlas = new TextureAtlas("Mario_and_Enemies.pack");
         this.game = game;
@@ -58,10 +61,10 @@ public class PlayScreen implements Screen {
         b2dr = new Box2DDebugRenderer();
 
         palyer = new Mario(this);
-        goomba= new Goomba(this,.64f,.32f);
+        //goomba= new Goomba(this,.64f,.32f);
         world.setContactListener(new WorldContactListener());
 
-        new B2WorldCreator(this);
+        creator = new B2WorldCreator(this);
     }
     public TextureAtlas getAtlas(){
         return this.atlas;
@@ -102,7 +105,8 @@ public class PlayScreen implements Screen {
             gameCam.position.x = 2;
 
 
-        goomba.update(dt);
+        for (Enemy goomba : creator.getGoombas())
+            goomba.update(dt);
         hud.update(dt);
         gameCam.update();
         renderer.setView(gameCam);
@@ -118,7 +122,8 @@ public class PlayScreen implements Screen {
         game.batch.setProjectionMatrix(gameCam.combined);
         game.batch.begin();
         palyer.draw(game.batch);
-        goomba.draw(game.batch);
+        for (Enemy goomba : creator.getGoombas())
+            goomba.draw(game.batch);
         game.batch.end();
 
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
