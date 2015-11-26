@@ -1,10 +1,10 @@
 package com.lcj.supermario;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.lcj.supermario.screen.PlayScreen;
 
 public class SuperMario extends Game {
@@ -32,7 +32,7 @@ public class SuperMario extends Game {
 		manager.load("audio/music/mario_music.ogg",Music.class);
 		manager.load("audio/sounds/bump.wav",Sound.class);
 		manager.load("audio/sounds/coin.wav",Sound.class);
-		manager.finishLoading();
+		//manager.finishLoading();
 		setScreen(new PlayScreen(this));
 	}
 
@@ -40,6 +40,7 @@ public class SuperMario extends Game {
 	public void render () {
 		super.render();
 	}
+
 
 	@Override
 	public void dispose() {

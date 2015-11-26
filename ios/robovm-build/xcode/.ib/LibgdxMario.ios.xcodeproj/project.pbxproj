@@ -1,0 +1,294 @@
+{
+	"archiveVersion" = "1";
+	"classes" =
+		{
+		};
+	"objectVersion" = "46";
+	"objects" =
+		{
+			"100000000000000000000002" =
+				{
+					"isa" = "PBXGroup";
+					"children" =
+						("AC966FDB9ABE48C28D70B40E", "44DE8CCF34E149D3908F7A25");
+					"sourceTree" = "<group>";
+				};
+			"100000000000000000000006" =
+				{
+					"isa" = "PBXNativeTarget";
+					"buildPhases" =
+						("100000000000000000000007");
+					"buildRules" =
+						();
+					"dependencies" =
+						();
+					"name" = "test";
+					"productName" = "test";
+					"productType" = "com.apple.product-type.application";
+				};
+			"100000000000000000000001" =
+				{
+					"isa" = "PBXProject";
+					"attributes" =
+						{
+							"LastUpgradeCheck" = "0620";
+						};
+					"buildConfigurationList" = "100000000000000000000003";
+					"compatibilityVersion" = "Xcode 3.2";
+					"developmentRegion" = "English";
+					"hasScannedForEncodings" = "0";
+					"knownRegions" =
+						("en");
+					"mainGroup" = "100000000000000000000002";
+					"projectDirPath" = "";
+					"projectRoot" = "";
+					"targets" =
+						("100000000000000000000006");
+				};
+			"100000000000000000000007" =
+				{
+					"isa" = "PBXSourcesBuildPhase";
+					"buildActionMask" = "2147483647";
+					"files" =
+						();
+					"runOnlyForDeploymentPostprocessing" = "0";
+				};
+			"100000000000000000000004" =
+				{
+					"isa" = "XCBuildConfiguration";
+					"buildSettings" =
+						{
+							"INFOPLIST_FILE" = "/Users/aniu/Downloads/libgdx-1.6.1/LibgdxMario/ios/Info.plist.xml";
+							"SDKROOT" = "iphoneos";
+							"TARGETED_DEVICE_FAMILY" = "1,2";
+							"GCC_PRECOMPILE_PREFIX_HEADER" = "YES";
+							"GCC_PREFIX_HEADER" = "/Users/aniu/Downloads/libgdx-1.6.1/LibgdxMario/ios/robovm-build/xcode/.ib/Prefix.pch";
+						};
+					"name" = "Debug";
+				};
+			"100000000000000000000005" =
+				{
+					"isa" = "XCBuildConfiguration";
+					"buildSettings" =
+						{
+							"INFOPLIST_FILE" = "/Users/aniu/Downloads/libgdx-1.6.1/LibgdxMario/ios/Info.plist.xml";
+							"SDKROOT" = "iphoneos";
+							"TARGETED_DEVICE_FAMILY" = "1,2";
+							"GCC_PRECOMPILE_PREFIX_HEADER" = "YES";
+							"GCC_PREFIX_HEADER" = "/Users/aniu/Downloads/libgdx-1.6.1/LibgdxMario/ios/robovm-build/xcode/.ib/Prefix.pch";
+						};
+					"name" = "Release";
+				};
+			"100000000000000000000003" =
+				{
+					"isa" = "XCConfigurationList";
+					"buildConfigurations" =
+						("100000000000000000000004", "100000000000000000000005");
+					"defaultConfigurationIsVisible" = "0";
+					"defaultConfigurationName" = "Release";
+				};
+			"AC966FDB9ABE48C28D70B40E" =
+				{
+					"isa" = "PBXGroup";
+					"children" =
+						("EE1472F5EDEF4231AE65339A", "CA5A27F5DCC140C1BCB0572C", "872475EAB7054ECFA284FD1B",
+ "D60845D4047E4B9785116C89", "8E624CDC2BEC4A7082D87733", "8745F3A9169047B8A3EA93B3",
+ "3E316A2F70224C4BAE165C15", "E98F87FDEE67480FB7B0FAE6", "595AAC9C013A481FA877CD60",
+ "F09C0E7C03B0415193924EAE", "27619073053B4C1B959F50B7", "DE3080D68E1A40188E10F80F",
+ "D15830FCC0174C0EBC2929EB", "FF07793343414BDA8966C5C6", "1A169DCB18E6491784FECD83"
+);
+					"name" = "Resources";
+					"sourceTree" = "<absolute>";
+					"path" = "/Users/aniu/Downloads/libgdx-1.6.1/LibgdxMario/ios/../android/assets";
+				};
+			"CA5A27F5DCC140C1BCB0572C" =
+				{
+					"isa" = "PBXFileReference";
+					"name" = "badlogic.jpg";
+					"lastKnownFileType" = "image.jpeg";
+					"sourceTree" = "<group>";
+					"path" = "badlogic.jpg";
+				};
+			"5B41D71D2AEA46BB92CC9BE6" =
+				{
+					"isa" = "PBXFileReference";
+					"name" = "big_mario.png";
+					"lastKnownFileType" = "image.png";
+					"sourceTree" = "<group>";
+					"path" = "big_mario.png";
+				};
+			"EE1472F5EDEF4231AE65339A" =
+				{
+					"isa" = "PBXGroup";
+					"children" =
+						("5B41D71D2AEA46BB92CC9BE6", "BA46F37AA3B84DA3A45EAF7A", "FE8234B26BB941AC9140426D",
+ "CAC00AABD68B40FD8C2D9CC3", "E8742666E7824BFB92BF2565", "5F872273C3214DA3AEEB8E84"
+);
+					"name" = "Mario GFX";
+					"sourceTree" = "<group>";
+					"path" = "Mario GFX";
+				};
+			"BA46F37AA3B84DA3A45EAF7A" =
+				{
+					"isa" = "PBXFileReference";
+					"name" = "fireball.png";
+					"lastKnownFileType" = "image.png";
+					"sourceTree" = "<group>";
+					"path" = "fireball.png";
+				};
+			"FE8234B26BB941AC9140426D" =
+				{
+					"isa" = "PBXFileReference";
+					"name" = "goomba.png";
+					"lastKnownFileType" = "image.png";
+					"sourceTree" = "<group>";
+					"path" = "goomba.png";
+				};
+			"CAC00AABD68B40FD8C2D9CC3" =
+				{
+					"isa" = "PBXFileReference";
+					"name" = "little_mario.png";
+					"lastKnownFileType" = "image.png";
+					"sourceTree" = "<group>";
+					"path" = "little_mario.png";
+				};
+			"E8742666E7824BFB92BF2565" =
+				{
+					"isa" = "PBXFileReference";
+					"name" = "mushroom.png";
+					"lastKnownFileType" = "image.png";
+					"sourceTree" = "<group>";
+					"path" = "mushroom.png";
+				};
+			"5F872273C3214DA3AEEB8E84" =
+				{
+					"isa" = "PBXFileReference";
+					"name" = "turtle.png";
+					"lastKnownFileType" = "image.png";
+					"sourceTree" = "<group>";
+					"path" = "turtle.png";
+				};
+			"FF07793343414BDA8966C5C6" =
+				{
+					"isa" = "PBXFileReference";
+					"name" = "Mario_and_Enemies.png";
+					"lastKnownFileType" = "image.png";
+					"sourceTree" = "<group>";
+					"path" = "Mario_and_Enemies.png";
+				};
+			"1A169DCB18E6491784FECD83" =
+				{
+					"isa" = "PBXFileReference";
+					"name" = "tileset_gutter.png";
+					"lastKnownFileType" = "image.png";
+					"sourceTree" = "<group>";
+					"path" = "tileset_gutter.png";
+				};
+			"9857FCD39BA440C4997CCFE8" =
+				{
+					"isa" = "PBXFileReference";
+					"name" = "Info.plist";
+					"explicitFileType" = "text.plist.info";
+					"sourceTree" = "<group>";
+					"path" = "Info.plist.xml";
+				};
+			"44DE8CCF34E149D3908F7A25" =
+				{
+					"isa" = "PBXGroup";
+					"children" =
+						("9857FCD39BA440C4997CCFE8");
+					"name" = "Supporting Files";
+					"sourceTree" = "<absolute>";
+					"path" = "/Users/aniu/Downloads/libgdx-1.6.1/LibgdxMario/ios";
+				};
+			"872475EAB7054ECFA284FD1B" =
+				{
+					"isa" = "PBXFileReference";
+					"name" = "Default-375w-667h@2x.png";
+					"lastKnownFileType" = "image.png";
+					"sourceTree" = "<group>";
+					"path" = "Default-375w-667h@2x.png";
+				};
+			"D60845D4047E4B9785116C89" =
+				{
+					"isa" = "PBXFileReference";
+					"name" = "Default-414w-736h@3x.png";
+					"lastKnownFileType" = "image.png";
+					"sourceTree" = "<group>";
+					"path" = "Default-414w-736h@3x.png";
+				};
+			"8E624CDC2BEC4A7082D87733" =
+				{
+					"isa" = "PBXFileReference";
+					"name" = "Default-568h@2x.png";
+					"lastKnownFileType" = "image.png";
+					"sourceTree" = "<group>";
+					"path" = "Default-568h@2x.png";
+				};
+			"8745F3A9169047B8A3EA93B3" =
+				{
+					"isa" = "PBXFileReference";
+					"name" = "Default.png";
+					"lastKnownFileType" = "image.png";
+					"sourceTree" = "<group>";
+					"path" = "Default.png";
+				};
+			"3E316A2F70224C4BAE165C15" =
+				{
+					"isa" = "PBXFileReference";
+					"name" = "Default@2x.png";
+					"lastKnownFileType" = "image.png";
+					"sourceTree" = "<group>";
+					"path" = "Default@2x.png";
+				};
+			"E98F87FDEE67480FB7B0FAE6" =
+				{
+					"isa" = "PBXFileReference";
+					"name" = "Default@2x~ipad.png";
+					"lastKnownFileType" = "image.png";
+					"sourceTree" = "<group>";
+					"path" = "Default@2x~ipad.png";
+				};
+			"595AAC9C013A481FA877CD60" =
+				{
+					"isa" = "PBXFileReference";
+					"name" = "Default~ipad.png";
+					"lastKnownFileType" = "image.png";
+					"sourceTree" = "<group>";
+					"path" = "Default~ipad.png";
+				};
+			"F09C0E7C03B0415193924EAE" =
+				{
+					"isa" = "PBXFileReference";
+					"name" = "Icon-72.png";
+					"lastKnownFileType" = "image.png";
+					"sourceTree" = "<group>";
+					"path" = "Icon-72.png";
+				};
+			"27619073053B4C1B959F50B7" =
+				{
+					"isa" = "PBXFileReference";
+					"name" = "Icon-72@2x.png";
+					"lastKnownFileType" = "image.png";
+					"sourceTree" = "<group>";
+					"path" = "Icon-72@2x.png";
+				};
+			"DE3080D68E1A40188E10F80F" =
+				{
+					"isa" = "PBXFileReference";
+					"name" = "Icon.png";
+					"lastKnownFileType" = "image.png";
+					"sourceTree" = "<group>";
+					"path" = "Icon.png";
+				};
+			"D15830FCC0174C0EBC2929EB" =
+				{
+					"isa" = "PBXFileReference";
+					"name" = "Icon@2x.png";
+					"lastKnownFileType" = "image.png";
+					"sourceTree" = "<group>";
+					"path" = "Icon@2x.png";
+				};
+		};
+	"rootObject" = "100000000000000000000001";
+}
