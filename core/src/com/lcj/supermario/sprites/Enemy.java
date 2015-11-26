@@ -13,7 +13,7 @@ import com.lcj.supermario.screen.PlayScreen;
 public abstract class Enemy extends Sprite {
     protected World world;
     protected PlayScreen screen;
-    protected Body b2body;
+    public Body b2body;
     protected Vector2 velocity;
 
 
@@ -22,7 +22,8 @@ public abstract class Enemy extends Sprite {
         this.world = screen.getWorld();
         setPosition(x,y);
         defineEnemy();
-        velocity = new Vector2(1, 0);
+        velocity = new Vector2(-1, 0);
+        b2body.setActive(false);
     }
 
     protected abstract void defineEnemy();
