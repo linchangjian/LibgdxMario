@@ -88,9 +88,9 @@ public class Mario extends Sprite {
         fdef.shape = head;
         fdef.isSensor = true;
         b2body.createFixture(fdef).setUserData("head");
-//        music = SuperMario.manager.get("audio/music/mario_music.ogg",Music.class);
-//        music.setLooping(true);
-//        music.play();
+        music = SuperMario.manager.get("audio/music/mario_music.ogg",Music.class);
+        music.setLooping(true);
+        music.play();
     }
 
     public void update(float dt){

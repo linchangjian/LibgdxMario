@@ -32,7 +32,7 @@ public class SuperMario extends Game {
 		manager.load("audio/music/mario_music.ogg",Music.class);
 		manager.load("audio/sounds/bump.wav",Sound.class);
 		manager.load("audio/sounds/coin.wav",Sound.class);
-		//manager.finishLoading();
+		manager.finishLoading();
 		setScreen(new PlayScreen(this));
 	}
 

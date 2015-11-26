@@ -12,6 +12,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.lcj.supermario.screen.PlayScreen;
 import com.lcj.supermario.sprites.Brick;
 import com.lcj.supermario.sprites.Coin;
+import com.lcj.supermario.sprites.Pipe;
 
 /**
  * Created by aniu on 15/11/24.
@@ -42,7 +43,7 @@ public class B2WorldCreator {
         for(MapObject object : map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject)object).getRectangle();
 
-            new Coin(screen,rect);
+            new Pipe(screen,rect);
         }
     }
 }
