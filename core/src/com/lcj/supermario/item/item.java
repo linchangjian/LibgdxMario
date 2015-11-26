@@ -7,6 +7,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.lcj.supermario.SuperMario;
 import com.lcj.supermario.screen.PlayScreen;
+import com.lcj.supermario.sprites.Mario;
 
 
 /**
@@ -31,7 +32,7 @@ public abstract class Item extends Sprite{
     }
 
     protected abstract void defineItem();
-    protected abstract void use();
+    public abstract void use(Mario mario);
 
     public void update(float dt){
         if(toDestroy && !destroyed){
@@ -48,5 +49,12 @@ public abstract class Item extends Sprite{
 
     public void destroy(){
         toDestroy = true;
+    }
+
+    public void reverseVelocity(boolean x , boolean y){
+        if(x)
+            velocity.x = -velocity.x;
+        if(y)
+            velocity.y = -velocity.y;
     }
 }

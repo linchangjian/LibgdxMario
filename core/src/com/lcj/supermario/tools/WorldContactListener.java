@@ -7,8 +7,10 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.lcj.supermario.SuperMario;
+import com.lcj.supermario.item.Item;
 import com.lcj.supermario.sprites.Enemy;
 import com.lcj.supermario.sprites.InteractiveTileObject;
+import com.lcj.supermario.sprites.Mario;
 
 /**
  * Created by aniu on 15/11/24.
@@ -47,6 +49,18 @@ public class WorldContactListener implements ContactListener {
                 break;
             case SuperMario.MARIO_BIT | SuperMario.ENEMY_BIT:
                 Gdx.app.log("mario died","died");
+                break;
+            case SuperMario.ITEM_BIT | SuperMario.OBJECT_BIT:
+                if (fixA.getFilterData().categoryBits == SuperMario.ITEM_BIT)
+                    ((Item)fixA.getUserData()).reverseVelocity(true,false);
+                else
+                    ((Item)fixB.getUserData()).reverseVelocity(true,false);
+                break;
+            case SuperMario.ITEM_BIT | SuperMario.MARIO_BIT:
+                if (fixA.getFilterData().categoryBits == SuperMario.ITEM_BIT)
+                    ((Item)fixA.getUserData()).use(((Mario)fixB.getUserData()));
+                else
+                    ((Item)fixB.getUserData()).use(((Mario)fixA.getUserData()));
                 break;
 
         }
