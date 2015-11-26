@@ -13,15 +13,22 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.lcj.supermario.SuperMario;
+import com.lcj.supermario.item.Item;
+import com.lcj.supermario.item.ItemDef;
+import com.lcj.supermario.item.Mushroom;
 import com.lcj.supermario.scenes.Hud;
 import com.lcj.supermario.sprites.Enemy;
 import com.lcj.supermario.sprites.Goomba;
 import com.lcj.supermario.sprites.Mario;
 import com.lcj.supermario.tools.B2WorldCreator;
 import com.lcj.supermario.tools.WorldContactListener;
+
+import java.util.PriorityQueue;
+import java.util.concurrent.PriorityBlockingQueue;
 
 /**
  * Created by aniu on 15/11/23.
@@ -45,6 +52,10 @@ public class PlayScreen implements Screen {
     private TextureAtlas atlas;
 
     private B2WorldCreator creator;
+
+    private Array<Item> items;
+    private PriorityQueue<ItemDef> itemToSpwan;
+    //private PriorityBlockingQueue<ItemDef> itemToSpwan;
     public PlayScreen(SuperMario game) {
         atlas = new TextureAtlas("Mario_and_Enemies.pack");
         this.game = game;
@@ -65,6 +76,23 @@ public class PlayScreen implements Screen {
         world.setContactListener(new WorldContactListener());
 
         creator = new B2WorldCreator(this);
+
+        items = new Array<Item>();
+        itemToSpwan = new PriorityQueue<ItemDef>();
+
+    }
+    public void spawnItem(ItemDef idef){
+        itemToSpwan.add(idef);
+    }
+
+    public void handleSpawningItems(){
+        if(!itemToSpwan.isEmpty()){
+            ItemDef idef = itemToSpwan.poll();
+            if(idef.type == Mushroom.class){
+                items.add(new Mushroom(this, idef.position.x,idef.position.y));
+            }
+        }
+
     }
     public TextureAtlas getAtlas(){
         return this.atlas;
@@ -96,7 +124,7 @@ public class PlayScreen implements Screen {
 
     public void update(float dt) {
         handleInput(dt);
-
+        handleSpawningItems();
         world.step(1 / 60f, 6, 2);
 
         palyer.update(dt);
@@ -112,6 +140,10 @@ public class PlayScreen implements Screen {
                 goomba.b2body.setActive(true);
             }
         }
+        for (Item item : items){
+            item.update(dt);
+        }
+
         hud.update(dt);
         gameCam.update();
         renderer.setView(gameCam);
@@ -129,6 +161,9 @@ public class PlayScreen implements Screen {
         palyer.draw(game.batch);
         for (Enemy goomba : creator.getGoombas())
             goomba.draw(game.batch);
+        for (Item item : items){
+            item.draw(game.batch);
+        }
         game.batch.end();
 
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
