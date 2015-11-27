@@ -29,14 +29,14 @@ public class Coin extends InteractiveTileObject {
     }
 
     @Override
-    public void onHeadHit() {
+    public void onHeadHit(Mario mario) {
         Gdx.app.log("Coin", "Collision");
         //setCategoryFilter(SuperMario.DESTROYED_BIT);
         if(getCell().getTile().getId() == BLANK_COIN){
             SuperMario.manager.get("audio/sounds/bump.wav",Sound.class).play();
         }else{
             if(mapObject.getProperties().containsKey("mashroom")){
-                SuperMario.manager.get("audio/sounds/powerup.wav",Sound.class).play();
+                SuperMario.manager.get("audio/sounds/powerup_spawn.wav",Sound.class).play();
                 screen.spawnItem(new ItemDef(new Vector2(body.getPosition().x, body.getPosition().y + 16/SuperMario.PPM), Mushroom.class));
 
             }else {

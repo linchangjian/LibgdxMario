@@ -1,7 +1,6 @@
 package com.lcj.supermario.sprites;
 
 import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.math.Rectangle;
 import com.lcj.supermario.SuperMario;
 import com.lcj.supermario.screen.PlayScreen;
 
@@ -18,7 +17,7 @@ public class Pipe extends InteractiveTileObject {
     }
 
     @Override
-    public void onHeadHit() {
+    public void onHeadHit(Mario mario) {
 
     }
 }

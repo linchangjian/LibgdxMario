@@ -51,7 +51,7 @@ public abstract class InteractiveTileObject {
 
 
     }
-    public abstract void onHeadHit();
+    public abstract void onHeadHit(Mario mario);
     public void setCategoryFilter(short filterBit){
         Filter filter = new Filter();
         filter.categoryBits  = filterBit;

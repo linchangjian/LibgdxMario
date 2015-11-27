@@ -1,6 +1,7 @@
 package com.lcj.supermario.sprites;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
@@ -20,10 +21,16 @@ public class Brick extends InteractiveTileObject{
     }
 
     @Override
-    public void onHeadHit() {
-        Gdx.app.log("Brick","Collision");
-        setCategoryFilter(SuperMario.DESTROYED_BIT);
-        getCell().setTile(null);
-        Hud.addScore(200);
+    public void onHeadHit(Mario mario) {
+        if(mario.isBig()){
+            Gdx.app.log("Brick","Collision");
+            setCategoryFilter(SuperMario.DESTROYED_BIT);
+            getCell().setTile(null);
+            Hud.addScore(200);
+            SuperMario.manager.get("audio/sounds/breakblock.wav",Sound.class).play();
+        }else{
+            SuperMario.manager.get("audio/sounds/bump.wav",Sound.class).play();
+
+        }
     }
 }
