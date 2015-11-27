@@ -27,6 +27,7 @@ public class Mario extends Sprite {
         JUMPING,
         STANDING,
         RUNNING,
+        GROWING
 
     }
     public State currentState;
@@ -38,7 +39,14 @@ public class Mario extends Sprite {
     private Animation marioRun;
     private Animation marioJump;
 
+    private TextureRegion bigMarioStand;
+    private TextureRegion bigMarioJump;
+    private Animation bigMarioRun;
+    private Animation growMario;
+
     private boolean runningRight;
+    private boolean marioIsBig;
+    private boolean runGrowAnimation;
     private float stateTimer;
     private Music music;
     public Mario(PlayScreen screen){
@@ -63,6 +71,25 @@ public class Mario extends Sprite {
         marioStand = new TextureRegion(getTexture(),0,10,16,16);
         setBounds(0, 0, 16 / SuperMario.PPM, 16 / SuperMario.PPM);
 
+        //big Mario create animation and texture
+        bigMarioStand = new TextureRegion(screen.getAtlas().findRegion("big_mario"),0,0,16,32);
+        bigMarioJump = new TextureRegion(screen.getAtlas().findRegion("big_mario"),80,0,16,32);
+
+        frames.clear();
+        for(int i = 1; i < 4 ;i++){
+            frames.add(new TextureRegion(screen.getAtlas().findRegion("big_mario"),i*16,0,16,32));
+        }
+        bigMarioRun = new Animation(0.1f,frames);
+
+        frames.clear();
+        frames.add(new TextureRegion(screen.getAtlas().findRegion("big_mario"),240,0,16,32));
+        frames.add(new TextureRegion(screen.getAtlas().findRegion("big_mario"),0,0,16,32));
+        frames.add(new TextureRegion(screen.getAtlas().findRegion("big_mario"),240,0,16,32));
+        frames.add(new TextureRegion(screen.getAtlas().findRegion("big_mario"),0,0,16,32));
+
+        growMario = new Animation(0.2f,frames);
+        frames.clear();
+
         BodyDef bdef = new BodyDef();
         bdef.position.set(32/ SuperMario.PPM, 32/ SuperMario.PPM);
         bdef.type = BodyDef.BodyType.DynamicBody;
@@ -82,7 +109,7 @@ public class Mario extends Sprite {
                         SuperMario.ITEM_BIT;
 
         fdef.shape = shape;
-        b2body.createFixture(fdef);
+        b2body.createFixture(fdef).setUserData(this);
 
         EdgeShape head = new EdgeShape();
         head.set(new Vector2(-2/ SuperMario.PPM, 8/ SuperMario.PPM),new Vector2(2/ SuperMario.PPM, 8/ SuperMario.PPM));
@@ -105,16 +132,21 @@ public class Mario extends Sprite {
 
         TextureRegion region;
         switch (currentState){
+            case GROWING:
+                region = growMario.getKeyFrame(stateTimer);
+                if(growMario.isAnimationFinished(stateTimer))
+                    runGrowAnimation = false;
+                break;
             case JUMPING:
-                region = marioJump.getKeyFrame(stateTimer);
+                region = marioIsBig ?bigMarioJump : marioJump.getKeyFrame(stateTimer);
                 break;
             case RUNNING:
-                region = marioRun.getKeyFrame(stateTimer,true);
+                region = marioIsBig ? bigMarioRun.getKeyFrame(stateTimer,true):marioRun.getKeyFrame(stateTimer,true);
                 break;
             case FALLING:
             case STANDING:
                 default:
-                    region = marioStand;
+                    region = marioIsBig?bigMarioStand:marioStand;
                     break;
         }
         if((b2body.getLinearVelocity().x < 0 || !runningRight) && !region.isFlipX()){
@@ -131,6 +163,10 @@ public class Mario extends Sprite {
     }
 
     private State getState(){
+        if(runGrowAnimation){
+            return State.GROWING;
+        }
+
         if(b2body.getLinearVelocity().y > 0 || (b2body.getLinearVelocity().y < 0 && previousState == State.JUMPING))
             return State.JUMPING;
         else if(b2body.getLinearVelocity().y < 0)
@@ -139,5 +175,10 @@ public class Mario extends Sprite {
             return State.RUNNING;
         else
             return State.STANDING;
+    }
+    public void grow(){
+        runGrowAnimation = true;
+        marioIsBig = true;
+        setBounds(getX(),getY(),getWidth(),getHeight()*2);
     }
 }
