@@ -1,5 +1,7 @@
 package com.lcj.supermario.sprites;
 
+import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
@@ -25,12 +27,14 @@ public abstract class InteractiveTileObject {
     protected Body body;
     protected Fixture fixture;
     protected PlayScreen screen;
+    protected MapObject mapObject;
 
-    public InteractiveTileObject(PlayScreen screen, Rectangle bounds) {
+    public InteractiveTileObject(PlayScreen screen, MapObject mapObject) {
+        this.mapObject = mapObject;
         this.screen = screen;
         this.world = screen.getWorld();
         this.map = screen.getTiledMap();
-        this.bounds = bounds;
+        this.bounds = ((RectangleMapObject)mapObject).getRectangle();
 
         BodyDef bdef = new BodyDef();
         FixtureDef fdef = new FixtureDef();

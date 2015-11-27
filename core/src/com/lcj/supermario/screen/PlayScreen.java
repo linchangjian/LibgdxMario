@@ -28,6 +28,7 @@ import com.lcj.supermario.tools.B2WorldCreator;
 import com.lcj.supermario.tools.WorldContactListener;
 
 import java.util.PriorityQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.PriorityBlockingQueue;
 
 /**
@@ -54,8 +55,8 @@ public class PlayScreen implements Screen {
     private B2WorldCreator creator;
 
     private Array<Item> items;
-    private PriorityQueue<ItemDef> itemToSpwan;
-    //private PriorityBlockingQueue<ItemDef> itemToSpwan;
+    //private PriorityQueue<ItemDef> itemToSpwan;
+    private LinkedBlockingQueue<ItemDef> itemsToSpwan;
     public PlayScreen(SuperMario game) {
         atlas = new TextureAtlas("Mario_and_Enemies.pack");
         this.game = game;
@@ -78,16 +79,16 @@ public class PlayScreen implements Screen {
         creator = new B2WorldCreator(this);
 
         items = new Array<Item>();
-        itemToSpwan = new PriorityQueue<ItemDef>();
+        itemsToSpwan = new LinkedBlockingQueue<ItemDef>();
 
     }
     public void spawnItem(ItemDef idef){
-        itemToSpwan.add(idef);
+        itemsToSpwan.add(idef);
     }
 
     public void handleSpawningItems(){
-        if(!itemToSpwan.isEmpty()){
-            ItemDef idef = itemToSpwan.poll();
+        if(!itemsToSpwan.isEmpty()){
+            ItemDef idef = itemsToSpwan.poll();
             if(idef.type == Mushroom.class){
                 items.add(new Mushroom(this, idef.position.x,idef.position.y));
             }
