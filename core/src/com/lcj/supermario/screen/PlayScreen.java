@@ -27,9 +27,7 @@ import com.lcj.supermario.sprites.Mario;
 import com.lcj.supermario.tools.B2WorldCreator;
 import com.lcj.supermario.tools.WorldContactListener;
 
-import java.util.PriorityQueue;
 import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.PriorityBlockingQueue;
 
 /**
  * Created by aniu on 15/11/23.

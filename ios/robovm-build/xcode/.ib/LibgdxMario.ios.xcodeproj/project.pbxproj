@@ -91,11 +91,11 @@
 				{
 					"isa" = "PBXGroup";
 					"children" =
-						("EE1472F5EDEF4231AE65339A", "CA5A27F5DCC140C1BCB0572C", "872475EAB7054ECFA284FD1B",
- "D60845D4047E4B9785116C89", "8E624CDC2BEC4A7082D87733", "8745F3A9169047B8A3EA93B3",
- "3E316A2F70224C4BAE165C15", "E98F87FDEE67480FB7B0FAE6", "595AAC9C013A481FA877CD60",
- "F09C0E7C03B0415193924EAE", "27619073053B4C1B959F50B7", "DE3080D68E1A40188E10F80F",
- "D15830FCC0174C0EBC2929EB", "FF07793343414BDA8966C5C6", "1A169DCB18E6491784FECD83"
+						("EE1472F5EDEF4231AE65339A", "CA5A27F5DCC140C1BCB0572C", "C972F73C95FD4842AA1AC58B",
+ "A517F987C9344DFB94A902D7", "DC1D43594F694B7FB0ACF095", "6846424B87064797A44D62D2",
+ "2C35516D6EDF4567933CE6C9", "CD3A99CC1320433BBDD3DC95", "4561B3E18D4D49169DD94621",
+ "FEC73A659DF44D608DE1EFC5", "20D0F6425D464691B2205352", "19F32047032F4705B93D8F44",
+ "3F7F083FC06240CC88944F46", "FF07793343414BDA8966C5C6", "1A169DCB18E6491784FECD83"
 );
 					"name" = "Resources";
 					"sourceTree" = "<absolute>";
@@ -201,7 +201,7 @@
 					"sourceTree" = "<absolute>";
 					"path" = "/Users/aniu/Downloads/libgdx-1.6.1/LibgdxMario/ios";
 				};
-			"872475EAB7054ECFA284FD1B" =
+			"C972F73C95FD4842AA1AC58B" =
 				{
 					"isa" = "PBXFileReference";
 					"name" = "Default-375w-667h@2x.png";
@@ -209,7 +209,7 @@
 					"sourceTree" = "<group>";
 					"path" = "Default-375w-667h@2x.png";
 				};
-			"D60845D4047E4B9785116C89" =
+			"A517F987C9344DFB94A902D7" =
 				{
 					"isa" = "PBXFileReference";
 					"name" = "Default-414w-736h@3x.png";
@@ -217,7 +217,7 @@
 					"sourceTree" = "<group>";
 					"path" = "Default-414w-736h@3x.png";
 				};
-			"8E624CDC2BEC4A7082D87733" =
+			"DC1D43594F694B7FB0ACF095" =
 				{
 					"isa" = "PBXFileReference";
 					"name" = "Default-568h@2x.png";
@@ -225,7 +225,7 @@
 					"sourceTree" = "<group>";
 					"path" = "Default-568h@2x.png";
 				};
-			"8745F3A9169047B8A3EA93B3" =
+			"6846424B87064797A44D62D2" =
 				{
 					"isa" = "PBXFileReference";
 					"name" = "Default.png";
@@ -233,7 +233,7 @@
 					"sourceTree" = "<group>";
 					"path" = "Default.png";
 				};
-			"3E316A2F70224C4BAE165C15" =
+			"2C35516D6EDF4567933CE6C9" =
 				{
 					"isa" = "PBXFileReference";
 					"name" = "Default@2x.png";
@@ -241,7 +241,7 @@
 					"sourceTree" = "<group>";
 					"path" = "Default@2x.png";
 				};
-			"E98F87FDEE67480FB7B0FAE6" =
+			"CD3A99CC1320433BBDD3DC95" =
 				{
 					"isa" = "PBXFileReference";
 					"name" = "Default@2x~ipad.png";
@@ -249,7 +249,7 @@
 					"sourceTree" = "<group>";
 					"path" = "Default@2x~ipad.png";
 				};
-			"595AAC9C013A481FA877CD60" =
+			"4561B3E18D4D49169DD94621" =
 				{
 					"isa" = "PBXFileReference";
 					"name" = "Default~ipad.png";
@@ -257,7 +257,7 @@
 					"sourceTree" = "<group>";
 					"path" = "Default~ipad.png";
 				};
-			"F09C0E7C03B0415193924EAE" =
+			"FEC73A659DF44D608DE1EFC5" =
 				{
 					"isa" = "PBXFileReference";
 					"name" = "Icon-72.png";
@@ -265,7 +265,7 @@
 					"sourceTree" = "<group>";
 					"path" = "Icon-72.png";
 				};
-			"27619073053B4C1B959F50B7" =
+			"20D0F6425D464691B2205352" =
 				{
 					"isa" = "PBXFileReference";
 					"name" = "Icon-72@2x.png";
@@ -273,7 +273,7 @@
 					"sourceTree" = "<group>";
 					"path" = "Icon-72@2x.png";
 				};
-			"DE3080D68E1A40188E10F80F" =
+			"19F32047032F4705B93D8F44" =
 				{
 					"isa" = "PBXFileReference";
 					"name" = "Icon.png";
@@ -281,7 +281,7 @@
 					"sourceTree" = "<group>";
 					"path" = "Icon.png";
 				};
-			"D15830FCC0174C0EBC2929EB" =
+			"3F7F083FC06240CC88944F46" =
 				{
 					"isa" = "PBXFileReference";
 					"name" = "Icon@2x.png";

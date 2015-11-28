@@ -34,7 +34,8 @@ public class Mushroom extends Item {
         SuperMario.ENEMY_BIT|
         SuperMario.GROUND_BIT|
         SuperMario.OBJECT_BIT|
-        SuperMario.MARIO_BIT;
+        SuperMario.MARIO_BIT|
+        SuperMario.COIN_BIT;
 
         fdef.shape = shape;
         body.createFixture(fdef).setUserData(this);

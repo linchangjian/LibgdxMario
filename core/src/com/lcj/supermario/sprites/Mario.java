@@ -22,6 +22,8 @@ import com.lcj.supermario.screen.PlayScreen;
 public class Mario extends Sprite {
 
 
+
+
     public enum State{
         FALLING,
         JUMPING,
@@ -50,6 +52,8 @@ public class Mario extends Sprite {
     private float stateTimer;
     private Music music;
     private boolean timeToDefineBigMario;
+    private boolean timeToRedefineMario;
+
     public Mario(PlayScreen screen){
         super(screen.getAtlas().findRegion("little_mario"));
         this.world = screen.getWorld();
@@ -135,6 +139,45 @@ public class Mario extends Sprite {
         if(timeToDefineBigMario){
             defineBigMario();
         }
+        if(timeToRedefineMario){
+            redefineMario();
+        }
+    }
+
+    private void redefineMario() {
+        Vector2 currentPosition = b2body.getPosition();
+        world.destroyBody(b2body);
+
+
+        BodyDef bdef = new BodyDef();
+        bdef.position.set(currentPosition);
+        bdef.type = BodyDef.BodyType.DynamicBody;
+        b2body = world.createBody(bdef);
+
+        FixtureDef fdef = new FixtureDef();
+        CircleShape shape = new CircleShape();
+        shape.setRadius(6/ SuperMario.PPM);
+
+        fdef.filter.categoryBits = SuperMario.MARIO_BIT;
+        fdef.filter.maskBits = SuperMario.GROUND_BIT |
+                SuperMario.COIN_BIT |
+                SuperMario.BRICK_BIT |
+                SuperMario.OBJECT_BIT |
+                SuperMario.ENEMY_BIT |
+                SuperMario.ENEMY_HEAD_BIT|
+                SuperMario.ITEM_BIT;
+
+        fdef.shape = shape;
+        b2body.createFixture(fdef).setUserData(this);
+
+        EdgeShape head = new EdgeShape();
+        head.set(new Vector2(-2/ SuperMario.PPM, 8/ SuperMario.PPM),new Vector2(2/ SuperMario.PPM, 8/ SuperMario.PPM));
+        fdef.filter.categoryBits = SuperMario.MARIO_HEAD_BIT;
+        fdef.shape = head;
+        fdef.isSensor = true;
+        b2body.createFixture(fdef).setUserData(this);
+        timeToRedefineMario = false;
+
     }
 
     private void defineBigMario() {
@@ -234,5 +277,18 @@ public class Mario extends Sprite {
     }
     public boolean isBig(){
         return marioIsBig;
+    }
+    public void hit() {
+        if(marioIsBig){
+            marioIsBig = false;
+            timeToRedefineMario = true;
+            setBounds(getX(), getY(),getWidth(),getHeight()/2);
+            SuperMario.manager.get("audio/sounds/powerdown.wav",Sound.class).play();
+
+        }else {
+            SuperMario.manager.get("audio/sounds/mariodie.wav",Sound.class).play();
+
+        }
+
     }
 }
