@@ -131,7 +131,7 @@ public class PlayScreen implements Screen {
         if(palyer.b2body.getPosition().x < gamePort.getWorldWidth() / 2)
             gameCam.position.x = 2;
 
-        Gdx.app.log("mario x : ",palyer.getX()+"");
+       // Gdx.app.log("mario x : ",palyer.getX()+"");
 
         for (Enemy goomba : creator.getGoombas()){
             goomba.update(dt);

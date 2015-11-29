@@ -10,11 +10,14 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.EdgeShape;
+import com.badlogic.gdx.physics.box2d.Filter;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.lcj.supermario.SuperMario;
 import com.lcj.supermario.screen.PlayScreen;
+import com.sun.org.apache.bcel.internal.generic.SIPUSH;
 
 /**
  * Created by aniu on 15/11/23.
@@ -29,7 +32,8 @@ public class Mario extends Sprite {
         JUMPING,
         STANDING,
         RUNNING,
-        GROWING
+        GROWING,
+        DEAD
 
     }
     public State currentState;
@@ -43,6 +47,7 @@ public class Mario extends Sprite {
 
     private TextureRegion bigMarioStand;
     private TextureRegion bigMarioJump;
+    private TextureRegion marioDead;
     private Animation bigMarioRun;
     private Animation growMario;
 
@@ -52,7 +57,7 @@ public class Mario extends Sprite {
     private float stateTimer;
     private Music music;
     private boolean timeToDefineBigMario;
-    private boolean timeToRedefineMario;
+    private boolean marioIsDead;
 
     public Mario(PlayScreen screen){
         super(screen.getAtlas().findRegion("little_mario"));
@@ -80,6 +85,8 @@ public class Mario extends Sprite {
         bigMarioStand = new TextureRegion(screen.getAtlas().findRegion("big_mario"),0,0,16,32);
         bigMarioJump = new TextureRegion(screen.getAtlas().findRegion("big_mario"),80,0,16,32);
 
+        marioDead = new TextureRegion(screen.getAtlas().findRegion("little_mario"),96,0,16,16);
+
         frames.clear();
         for(int i = 1; i < 4 ;i++){
             frames.add(new TextureRegion(screen.getAtlas().findRegion("big_mario"),i*16,0,16,32));
@@ -106,12 +113,12 @@ public class Mario extends Sprite {
 
         fdef.filter.categoryBits = SuperMario.MARIO_BIT;
         fdef.filter.maskBits = SuperMario.GROUND_BIT |
-                        SuperMario.COIN_BIT |
-                        SuperMario.BRICK_BIT |
-                        SuperMario.OBJECT_BIT |
-                        SuperMario.ENEMY_BIT |
-                        SuperMario.ENEMY_HEAD_BIT|
-                        SuperMario.ITEM_BIT;
+                SuperMario.COIN_BIT |
+                SuperMario.BRICK_BIT |
+                SuperMario.OBJECT_BIT |
+                SuperMario.ENEMY_BIT |
+                SuperMario.ENEMY_HEAD_BIT|
+                SuperMario.ITEM_BIT;
 
         fdef.shape = shape;
         b2body.createFixture(fdef).setUserData(this);
@@ -126,6 +133,7 @@ public class Mario extends Sprite {
         music.setLooping(true);
         music.play();
     }
+    private boolean timeToRedefineMario;
 
     public void update(float dt){
         if(marioIsBig){
@@ -222,6 +230,9 @@ public class Mario extends Sprite {
 
         TextureRegion region;
         switch (currentState){
+            case DEAD:
+                region = marioDead;
+                break;
             case GROWING:
                 region = growMario.getKeyFrame(stateTimer);
                 if(growMario.isAnimationFinished(stateTimer))
@@ -256,7 +267,9 @@ public class Mario extends Sprite {
         if(runGrowAnimation){
             return State.GROWING;
         }
-
+        if(marioIsDead){
+            return State.DEAD;
+        }
         if(b2body.getLinearVelocity().y > 0 || (b2body.getLinearVelocity().y < 0 && previousState == State.JUMPING))
             return State.JUMPING;
         else if(b2body.getLinearVelocity().y < 0)
@@ -286,7 +299,15 @@ public class Mario extends Sprite {
             SuperMario.manager.get("audio/sounds/powerdown.wav",Sound.class).play();
 
         }else {
+            SuperMario.manager.get("audio/music/mario_music.ogg",Music.class).stop();
             SuperMario.manager.get("audio/sounds/mariodie.wav",Sound.class).play();
+            marioIsDead = true;
+            Filter filter = new Filter();
+            filter.maskBits = SuperMario.NOTHING_BIT;
+            for (Fixture fixture : b2body.getFixtureList()){
+                fixture.setFilterData(filter);
+            }
+            b2body.applyLinearImpulse(new Vector2(0,4f),b2body.getWorldCenter(),true);
 
         }
 

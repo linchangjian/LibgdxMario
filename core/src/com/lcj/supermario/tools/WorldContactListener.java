@@ -49,10 +49,11 @@ public class WorldContactListener implements ContactListener {
                     ((Enemy)fixB.getUserData()).reverseVelocity(true,false);
                 break;
             case SuperMario.MARIO_BIT | SuperMario.ENEMY_BIT:
-                if (fixA.getFilterData().categoryBits == SuperMario.MARIO_BIT)
-                    ((Mario)fixA.getUserData()).hit();
-                else
-                    ((Mario)fixB.getUserData()).hit();
+                Gdx.app.log("","mario dead");
+                //if (fixA.getFilterData().categoryBits == SuperMario.MARIO_BIT)
+                   // ((Mario)fixA.getUserData()).hit();
+               // else
+                    //((Mario)fixB.getUserData()).hit();
                 break;
             case SuperMario.ITEM_BIT | SuperMario.OBJECT_BIT:
                 if (fixA.getFilterData().categoryBits == SuperMario.ITEM_BIT)
@@ -73,7 +74,7 @@ public class WorldContactListener implements ContactListener {
 
     @Override
     public void endContact(Contact contact) {
-        Gdx.app.log("end contact","");
+        //Gdx.app.log("end contact","");
 
     }
 

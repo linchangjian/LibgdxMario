@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.Filter;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.Array;
@@ -32,8 +34,6 @@ public class Goomba extends Enemy {
         walkAnimation = new Animation(0.4f,frames);
         stateTime = 0;
         setBounds(getX(),getY(),16/SuperMario.PPM, 16/SuperMario.PPM);
-        setToDestory = false;
-        destoryed = false;
     }
     public void update(float dt){
         stateTime += dt;
@@ -60,7 +60,6 @@ public class Goomba extends Enemy {
         CircleShape shape = new CircleShape();
         shape.setRadius(7/ SuperMario.PPM);
 
-        fdef.filter.categoryBits = SuperMario.ENEMY_BIT;
         fdef.filter.maskBits =
                 SuperMario.GROUND_BIT |
                 SuperMario.COIN_BIT |
@@ -70,12 +69,13 @@ public class Goomba extends Enemy {
                 SuperMario.OBJECT_BIT;
 
         fdef.shape = shape;
+        fdef.filter.categoryBits = SuperMario.ENEMY_BIT;
         b2body.createFixture(fdef).setUserData(this);
 
         PolygonShape head = new PolygonShape();
         Vector2[] vertice = new Vector2[4];
-        vertice[0] =  new Vector2(-6 ,8).scl(1 / SuperMario.PPM);
-        vertice[1] =  new Vector2(6 ,8).scl(1 / SuperMario.PPM);
+        vertice[0] =  new Vector2(-6 ,10).scl(1 / SuperMario.PPM);
+        vertice[1] =  new Vector2(6 ,10).scl(1 / SuperMario.PPM);
         vertice[2] =  new Vector2(-3 ,3).scl(1 / SuperMario.PPM);
         vertice[3] =  new Vector2(3 ,3).scl(1 / SuperMario.PPM);
         head.set(vertice);
