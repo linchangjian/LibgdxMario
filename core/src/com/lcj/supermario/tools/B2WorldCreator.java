@@ -16,15 +16,20 @@ import com.lcj.supermario.sprites.Brick;
 import com.lcj.supermario.sprites.Coin;
 import com.lcj.supermario.sprites.Goomba;
 import com.lcj.supermario.sprites.Pipe;
+import com.lcj.supermario.sprites.Turtle;
 
 /**
  * Created by aniu on 15/11/24.
  */
 public class B2WorldCreator {
     private Array<Goomba> goombas;
-
+    private Array<Turtle> turtles;
     public Array<Goomba> getGoombas() {
         return goombas;
+    }
+
+    public Array<Turtle> getTurtles() {
+        return turtles;
     }
 
     public B2WorldCreator(PlayScreen screen){
@@ -47,6 +52,12 @@ public class B2WorldCreator {
         for(MapObject object : map.getLayers().get(6).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject)object).getRectangle();
             goombas.add(new Goomba(screen,rect.getX()/ SuperMario.PPM,rect.getY() / SuperMario.PPM));
+        }
+
+        turtles = new Array<Turtle>();
+        for(MapObject object : map.getLayers().get(7).getObjects().getByType(RectangleMapObject.class)){
+            Rectangle rect = ((RectangleMapObject)object).getRectangle();
+            turtles.add(new Turtle(screen,rect.getX()/ SuperMario.PPM,rect.getY() / SuperMario.PPM));
         }
 
     }

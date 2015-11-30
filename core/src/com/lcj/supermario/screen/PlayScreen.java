@@ -139,6 +139,12 @@ public class PlayScreen implements Screen {
                 goomba.b2body.setActive(true);
             }
         }
+        for (Enemy turtle : creator.getTurtles()){
+            turtle.update(dt);
+            if(turtle.getX() < palyer.getX() + 224 / SuperMario.PPM){
+                turtle.b2body.setActive(true);
+            }
+        }
         for (Item item : items){
             item.update(dt);
         }
@@ -160,6 +166,8 @@ public class PlayScreen implements Screen {
         palyer.draw(game.batch);
         for (Enemy goomba : creator.getGoombas())
             goomba.draw(game.batch);
+        for (Enemy turtle : creator.getTurtles())
+            turtle.draw(game.batch);
         for (Item item : items){
             item.draw(game.batch);
         }
