@@ -1,10 +1,13 @@
 package com.lcj.supermario.sprites;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.Filter;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.Array;
@@ -21,7 +24,8 @@ public class Turtle extends Enemy {
     public enum State{
         WALKING,
         SHELL,
-        MOVING
+        MOVING,
+        DEAD
     }
     public State currentState;
     public State previousState;
@@ -32,7 +36,10 @@ public class Turtle extends Enemy {
     private boolean setToDestory;
     private boolean destoryed;
 
+    private float deadRotationDegrees;
+
     private TextureRegion shell;
+    private TextureRegion moving;
     public Turtle(PlayScreen screen, float x, float y) {
         super(screen, x, y);
         frames = new Array<TextureRegion>();
@@ -40,8 +47,10 @@ public class Turtle extends Enemy {
         frames.add(new TextureRegion(screen.getAtlas().findRegion("turtle"),16,0,16,24));
 
         shell = new TextureRegion(screen.getAtlas().findRegion("turtle"),64, 0,16,24);
+        moving = new TextureRegion(screen.getAtlas().findRegion("turtle"),80, 0,16,24);
         walkAnimation = new Animation(0.2f, frames);
         currentState = previousState = State.WALKING;
+        deadRotationDegrees = 0;
         setBounds(getX(), getY(), 16 / SuperMario.PPM,24/SuperMario.PPM);
 
     }
@@ -77,7 +86,7 @@ public class Turtle extends Enemy {
         vertice[3] =  new Vector2(3 ,3).scl(1 / SuperMario.PPM);
         head.set(vertice);
         fdef.shape = head;
-        fdef.restitution = 1.5f;
+        fdef.restitution = 0.5f;
         fdef.filter.categoryBits = SuperMario.ENEMY_HEAD_BIT;
         b2body.createFixture(fdef).setUserData(this);
     }
@@ -92,6 +101,11 @@ public class Turtle extends Enemy {
         }
     }
 
+    public void draw(Batch batch){
+        if(!destoryed){
+            //super.draw(batch);
+        }
+    }
     public void kick(int speed){
         velocity.x = speed;
         currentState = State.MOVING;
@@ -109,7 +123,46 @@ public class Turtle extends Enemy {
             velocity.x = 1;
         }
         setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - 8/SuperMario.PPM);
-        b2body.setLinearVelocity(velocity);
+
+        if(currentState == State.DEAD){
+            deadRotationDegrees += 3;
+            rotate(deadRotationDegrees);
+            if (stateTime > 5 && !destoryed){
+                world.destroyBody(b2body);
+                destoryed = true;
+            }
+        }else{
+
+            b2body.setLinearVelocity(velocity);
+        }
+
+    }
+
+    @Override
+    public void onEnmeyHit(Enemy enemy) {
+        if(enemy instanceof Turtle){
+            if(((Turtle)enemy).currentState == State.MOVING && currentState != State.MOVING){
+                killed();
+            }else if(currentState == State.MOVING && ((Turtle)(enemy)).currentState == State.WALKING){
+                return;
+            }else{
+                reverseVelocity(true,false);
+            }
+        }else if(currentState == State.MOVING){
+            reverseVelocity(true, false);
+
+        }
+    }
+
+    public void killed(){
+        currentState = State.DEAD;
+        Filter filter = new Filter();
+        filter.maskBits = SuperMario.NOTHING_BIT;
+        for(Fixture fixture : b2body.getFixtureList()){
+            fixture.setFilterData(filter);
+        }
+        b2body.applyLinearImpulse(new Vector2(0, 5f),b2body.getWorldCenter(),true);
+
     }
 
     private TextureRegion getFrame(float dt) {
@@ -117,6 +170,9 @@ public class Turtle extends Enemy {
         switch (currentState) {
             case SHELL:
                 region = shell;
+                break;
+            case MOVING:
+                region = moving;
                 break;
             case WALKING:
             default:

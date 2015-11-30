@@ -39,8 +39,8 @@ public class WorldContactListener implements ContactListener {
                 break;
             case SuperMario.ENEMY_BIT | SuperMario.ENEMY_BIT:
                 if (fixA.getFilterData().categoryBits == SuperMario.ENEMY_BIT)
-                    ((Enemy)fixA.getUserData()).reverseVelocity(true,false);
-                    ((Enemy)fixB.getUserData()).reverseVelocity(true,false);
+                    ((Enemy)fixA.getUserData()).onEnmeyHit((Enemy)fixB.getUserData());
+                    ((Enemy)fixB.getUserData()).onEnmeyHit((Enemy)fixA.getUserData());
                 break;
             case SuperMario.ENEMY_BIT | SuperMario.OBJECT_BIT:
                 if (fixA.getFilterData().categoryBits == SuperMario.ENEMY_BIT)
@@ -66,6 +66,8 @@ public class WorldContactListener implements ContactListener {
                     ((Item)fixA.getUserData()).use(((Mario)fixB.getUserData()));
                 else
                     ((Item)fixB.getUserData()).use(((Mario)fixA.getUserData()));
+                break;
+            default:
                 break;
 
         }

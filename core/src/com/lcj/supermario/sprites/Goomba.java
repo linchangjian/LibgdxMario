@@ -49,6 +49,16 @@ public class Goomba extends Enemy {
         }
 
     }
+
+    @Override
+    public void onEnmeyHit(Enemy enemy) {
+        if(enemy instanceof Turtle && ((Turtle)enemy).currentState == Turtle.State.MOVING){
+            setToDestory = true;
+        }else{
+            reverseVelocity(true, false);
+        }
+    }
+
     @Override
     protected void defineEnemy() {
         BodyDef bdef = new BodyDef();
