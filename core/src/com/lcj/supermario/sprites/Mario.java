@@ -19,6 +19,8 @@ import com.lcj.supermario.SuperMario;
 import com.lcj.supermario.screen.PlayScreen;
 import com.sun.org.apache.bcel.internal.generic.SIPUSH;
 
+import sun.net.www.protocol.mailto.MailToURLConnection;
+
 /**
  * Created by aniu on 15/11/23.
  */
@@ -291,23 +293,28 @@ public class Mario extends Sprite {
     public boolean isBig(){
         return marioIsBig;
     }
-    public void hit() {
-        if(marioIsBig){
-            marioIsBig = false;
-            timeToRedefineMario = true;
-            setBounds(getX(), getY(),getWidth(),getHeight()/2);
-            SuperMario.manager.get("audio/sounds/powerdown.wav",Sound.class).play();
+    public void hit(Enemy enemy) {
+        if(enemy instanceof Turtle && ((Turtle)enemy).getCurrentState() == Turtle.State.SHELL){
+            ((Turtle)enemy).kick(this.getX() <= this.getX()? Turtle.KICK_RIGHT_SPEED:Turtle.KICK_LEFT_SPEED);
+        }else{
+            if(marioIsBig){
+                marioIsBig = false;
+                timeToRedefineMario = true;
+                setBounds(getX(), getY(),getWidth(),getHeight()/2);
+                SuperMario.manager.get("audio/sounds/powerdown.wav",Sound.class).play();
 
-        }else {
-            SuperMario.manager.get("audio/music/mario_music.ogg",Music.class).stop();
-            SuperMario.manager.get("audio/sounds/mariodie.wav",Sound.class).play();
-            marioIsDead = true;
-            Filter filter = new Filter();
-            filter.maskBits = SuperMario.NOTHING_BIT;
-            for (Fixture fixture : b2body.getFixtureList()){
-                fixture.setFilterData(filter);
+            }else {
+                SuperMario.manager.get("audio/music/mario_music.ogg",Music.class).stop();
+                SuperMario.manager.get("audio/sounds/mariodie.wav",Sound.class).play();
+                marioIsDead = true;
+                Filter filter = new Filter();
+                filter.maskBits = SuperMario.NOTHING_BIT;
+                for (Fixture fixture : b2body.getFixtureList()){
+                    fixture.setFilterData(filter);
+                }
+                b2body.applyLinearImpulse(new Vector2(0,4f),b2body.getWorldCenter(),true);
+
             }
-            b2body.applyLinearImpulse(new Vector2(0,4f),b2body.getWorldCenter(),true);
 
         }
 

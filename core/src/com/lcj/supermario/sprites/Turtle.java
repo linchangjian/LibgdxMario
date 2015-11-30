@@ -15,9 +15,13 @@ import com.lcj.supermario.screen.PlayScreen;
  * Created by aniu on 15/11/30.
  */
 public class Turtle extends Enemy {
+    public static final int KICK_LEFT_SPEED = -2;
+    public static final int KICK_RIGHT_SPEED = 2;
+
     public enum State{
         WALKING,
-        SHELL
+        SHELL,
+        MOVING
     }
     public State currentState;
     public State previousState;
@@ -67,26 +71,36 @@ public class Turtle extends Enemy {
 
         PolygonShape head = new PolygonShape();
         Vector2[] vertice = new Vector2[4];
-        vertice[0] =  new Vector2(-6 ,10).scl(1 / SuperMario.PPM);
-        vertice[1] =  new Vector2(6 ,10).scl(1 / SuperMario.PPM);
+        vertice[0] =  new Vector2(-6 ,8).scl(1 / SuperMario.PPM);
+        vertice[1] =  new Vector2(6 ,8).scl(1 / SuperMario.PPM);
         vertice[2] =  new Vector2(-3 ,3).scl(1 / SuperMario.PPM);
         vertice[3] =  new Vector2(3 ,3).scl(1 / SuperMario.PPM);
         head.set(vertice);
         fdef.shape = head;
-        fdef.restitution = 0.5f;
+        fdef.restitution = 1.5f;
         fdef.filter.categoryBits = SuperMario.ENEMY_HEAD_BIT;
         b2body.createFixture(fdef).setUserData(this);
     }
 
     @Override
-    public void hitOnHead() {
+    public void hitOnHead(Mario mario) {
         if (currentState != State.SHELL){
             currentState = State.SHELL;
             velocity.x = 0;
-
+        }else{
+            kick(mario.getX() <= this.getX()? KICK_RIGHT_SPEED:KICK_LEFT_SPEED);
         }
     }
 
+    public void kick(int speed){
+        velocity.x = speed;
+        currentState = State.MOVING;
+
+    }
+
+    public State getCurrentState(){
+        return currentState;
+    }
     @Override
     public void update(float dt) {
         setRegion(getFrame(dt));

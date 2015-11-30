@@ -74,8 +74,8 @@ public class Goomba extends Enemy {
 
         PolygonShape head = new PolygonShape();
         Vector2[] vertice = new Vector2[4];
-        vertice[0] =  new Vector2(-6 ,10).scl(1 / SuperMario.PPM);
-        vertice[1] =  new Vector2(6 ,10).scl(1 / SuperMario.PPM);
+        vertice[0] =  new Vector2(-6 ,8).scl(1 / SuperMario.PPM);
+        vertice[1] =  new Vector2(6 ,8).scl(1 / SuperMario.PPM);
         vertice[2] =  new Vector2(-3 ,3).scl(1 / SuperMario.PPM);
         vertice[3] =  new Vector2(3 ,3).scl(1 / SuperMario.PPM);
         head.set(vertice);
@@ -92,7 +92,7 @@ public class Goomba extends Enemy {
     }
 
     @Override
-    public void hitOnHead() {
+    public void hitOnHead(Mario mario) {
          setToDestory = true;
         SuperMario.manager.get("audio/sounds/stomp.wav", Sound.class).play();
     }
