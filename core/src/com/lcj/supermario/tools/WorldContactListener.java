@@ -50,10 +50,10 @@ public class WorldContactListener implements ContactListener {
                 break;
             case SuperMario.MARIO_BIT | SuperMario.ENEMY_BIT:
                 Gdx.app.log("","mario dead");
-                //if (fixA.getFilterData().categoryBits == SuperMario.MARIO_BIT)
-                   // ((Mario)fixA.getUserData()).hit();
-               // else
-                    //((Mario)fixB.getUserData()).hit();
+                if (fixA.getFilterData().categoryBits == SuperMario.MARIO_BIT)
+                    ((Mario)fixA.getUserData()).hit();
+                else
+                    ((Mario)fixB.getUserData()).hit();
                 break;
             case SuperMario.ITEM_BIT | SuperMario.OBJECT_BIT:
                 if (fixA.getFilterData().categoryBits == SuperMario.ITEM_BIT)

@@ -168,6 +168,17 @@ public class PlayScreen implements Screen {
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
 
+        if(gameOver()){
+            game.setScreen(new GameOverScreen(game));
+            dispose();
+        }
+    }
+
+    public boolean gameOver(){
+        if(palyer.currentState == Mario.State.DEAD && palyer.getStateTimer() > 3){
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -198,4 +209,5 @@ public class PlayScreen implements Screen {
         renderer.dispose();
         hud.dispose();
     }
+
 }
